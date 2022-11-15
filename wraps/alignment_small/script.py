@@ -30,7 +30,11 @@ f.close()
 shell(command)
 
 # to calculate map perc and map score automatically from read length - this will force minimum length of noncoding part to 16
+<<<<<<< HEAD
+perc = math.ceil((16/int(snakemake.params.read_length))*100)/100
+=======
 perc = math.ceil(16/int(snakemake.params.read_length)*100)
+>>>>>>> 4426499c6b18e64f3adcbbf62a318c49a9b55a0c
 command = STAR+" --runMode alignReads --runThreadN " + str(snakemake.threads) + \
                " --genomeDir " + snakemake.input.index.replace("/SAindex","") + \
                " --readFilesIn " + str(snakemake.input.fastq)  + \

@@ -35,10 +35,23 @@ run_all <- function(args){
 	pair_occurence_sequence_filt$driver_length <- NULL
 	#collapse all targets starting on the same position in genome, get the longest alignment across these targets and sum Ndups and Nunique
 	# to deduplicate same targets with different UMIs
+<<<<<<< HEAD
+	if (is_umi == TRUE){
+		pair_occurence_sequence_filt <- pair_occurence_sequence_filt[,.(seq.g.len=max(nchar(seq.g)),seq.m=max(seq.m),Ndups=sum(Ndups),Nunique=sum(Nunique)), 
+																by=.(chr.g,pos.g,flag.g,smallrna,smallRNA_fam,strand,forward_dir,smallrna_nomm,mrna_length,
+                                                                cov,Nreads,mrna_aln,mrna_aln2,mrna_aln5,mrna_aln10,mrna_aln20)]
+	} else {
+		pair_occurence_sequence_filt <- pair_occurence_sequence_filt[,.(seq.g.len=max(nchar(seq.g)),seq.m=max(seq.m),Ndups=sum(Ndups)), 
+																by=.(chr.g,pos.g,flag.g,smallrna,smallRNA_fam,strand,forward_dir,smallrna_nomm,mrna_length,
+                                                                cov,Nreads,mrna_aln,mrna_aln2,mrna_aln5,mrna_aln10,mrna_aln20)]
+	}
+	
+=======
 	pair_occurence_sequence_filt <- pair_occurence_sequence_filt[,.(seq.g.len=max(nchar(seq.g)),seq.m=max(seq.m),Ndups=sum(Ndups),Nunique=sum(Nunique)), by=.(chr.g,pos.g,flag.g,smallrna,smallRNA_fam,strand,forward_dir,smallrna_nomm,mrna_length,
                                                                                                                                                             cov,Nreads,mrna_aln,mrna_aln2,mrna_aln5,mrna_aln10,mrna_aln20)]
 
 
+>>>>>>> 4426499c6b18e64f3adcbbf62a318c49a9b55a0c
 	####################################################
 	#add non-coding RNA type
 	pair_occurence_sequence_filt[, noncodingRNA_type := sapply(seq_along(chr.g),function(x) tail(unlist(tstrsplit(smallrna[x],"_")),n=1))]
