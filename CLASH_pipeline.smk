@@ -1,4 +1,4 @@
-qimport math
+import math
 import subprocess
 import json
 import re
