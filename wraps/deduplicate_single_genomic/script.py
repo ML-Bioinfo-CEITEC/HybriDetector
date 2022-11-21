@@ -23,7 +23,6 @@ f = open(snakemake.log.run, 'at')
 f.write("## CONDA: "+version+"\n")
 f.close()
 
-<<<<<<< HEAD
 if snakemake.params.is_umi == "FALSE":
     TOOL = "picard MarkDuplicates"
     SAMTOOLS = "samtools"
@@ -52,13 +51,6 @@ else:
 	f.write("## COMMAND: "+command+"\n")
 	f.close()
 	shell(command)
-=======
-command = UMITOOLS + " dedup -I " + snakemake.input.bam + " -S " + snakemake.output.bam + " --log " + snakemake.output.bam.replace(".bam",".log") + " --extract-umi-method=read_id --umi-separator='_' --method=directional --edit-distance-threshold=0 --spliced-is-unique --multimapping-detection-method=NH"
-f = open(snakemake.log.run, 'at')
-f.write("## COMMAND: "+command+"\n")
-f.close()
-shell(command)
->>>>>>> 4426499c6b18e64f3adcbbf62a318c49a9b55a0c
 
 command = SAMTOOLS +" index -@ "+str(snakemake.threads)+ " "+ snakemake.output.bam 
 f = open(snakemake.log.run, 'at')
@@ -66,16 +58,11 @@ f.write("## COMMAND: "+command+"\n")
 f.close()
 shell(command)
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 4426499c6b18e64f3adcbbf62a318c49a9b55a0c
 command = BAMCOVERAGE +" --normalizeUsing None -of bedgraph --binSize 1 -p "+str(snakemake.threads)+ " -b "+ snakemake.output.bam + " -o " + snakemake.output.bam.replace(".bam",".without_norm.bedgraph") + " >> " + snakemake.log.run + " 2>&1"
 f = open(snakemake.log.run, 'at')
 f.write("## COMMAND: "+command+"\n")
 f.close()
 shell(command)
-
 
 DIV= str(subprocess.Popen(SAMTOOLS+ " view -F 4 -@ " + str(snakemake.threads) +" "+ snakemake.output.bam +" | cut -f1 | sort -u -S20G --parallel=20 -T /mnt/ssd/ssd_1/tmp/ | wc -l | tr -d '\n'", shell=True, stdout=subprocess.PIPE).communicate()[0], 'utf-8')
 f = open(snakemake.log.run, 'at')

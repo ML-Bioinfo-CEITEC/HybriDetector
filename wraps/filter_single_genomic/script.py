@@ -66,11 +66,7 @@ shell(command)
 # here be carefull about grep, if there is . in read name, grep is extremely exhaustive and take a lot of memory unlesyou use -F
 #second thing is that if we have order number in read names,it is highly probable to filter much more reads than we wanna, therefore use -w as "exact word", 
 # but again be carefull, because the match muse be exact, nothing more in the begining or the end of word (apart space)
-<<<<<<< HEAD
 command = SAMTOOLS + " view -h -@ " + str(snakemake.threads) +" "+ snakemake.input.bam + " | grep -vwFf " +snakemake.output.bam.replace(".bam",".readids")+ " | " +SAMTOOLS + " view -bS -@ " + str(snakemake.threads) +" -o " + snakemake.output.bam_non_genomic + " -"
-=======
-command = SAMTOOLS + " view -h -@ " + str(snakemake.threads) +" "+ snakemake.input.bam + " | grep -vwf " +snakemake.output.bam.replace(".bam",".readids")+ " | " +SAMTOOLS + " view -bS -@ " + str(snakemake.threads) +" -o " + snakemake.output.bam_non_genomic + " -"
->>>>>>> 4426499c6b18e64f3adcbbf62a318c49a9b55a0c
 f = open(snakemake.log.run, 'at')
 f.write("## COMMAND: "+command+"\n")
 f.close()
