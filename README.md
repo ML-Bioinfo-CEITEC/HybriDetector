@@ -13,5 +13,18 @@ If you do not have [Anaconda](https://www.anaconda.com/distribution/) installed 
 - Go to the project directory `cd HybriDetector`
 - Recreate environment from yml file `conda env create -f snakemake.yml`
 - Activate the environment `conda activate snakemake`
+- Create the folder for the input file/s called "data" `mkdir data`
 - Run the app `snakemake --snakefile HybriDetector.smk --directory /path/to/the/directory/ --configfile configuration_file.json  --use-conda --conda-frontend mamba -p --res mem=100 -j 20`
-`
+
+## Hybrid detection
+Required input is already preprocessed zipped fastq file with precisely removed sequencíng barcodes and adapters and with suffix ".fastq.gz". In case the UMIs (Unique molecular identifiers) are used in a sequencíng library, should be already extracted and moved from the sequence to the read header. HybriDetector is capable to analyze single sample as well as multiple replicates of particular samples within one run. 
+
+### Arguments 
+
+`--sample` - fastq file names here written without the ".fastq.gz" suffix sepparated by space
+`--read_length` - [75] maximal lenght of seqeunced read within input fastq file
+`--is_umi` - [FALSE] specify whether you library contains extracted UMIs in the read header
+`--map_perc_single_genomic`
+`--map_score_single_genomic`
+`--map_perc_softclip`
+`--map_score_softclip`
