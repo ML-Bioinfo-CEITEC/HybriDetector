@@ -22,9 +22,15 @@ Required input is already preprocessed zipped fastq file with precisely removed 
 ### Arguments 
 
 `--sample` - fastq file names here written without the ".fastq.gz" suffix sepparated by space
+
 `--read_length` - [75] maximal lenght of seqeunced read within input fastq file
+
 `--is_umi` - [FALSE] specify whether you library contains extracted UMIs in the read header
+
 `--map_perc_single_genomic`
+
 `--map_score_single_genomic`
+
 `--map_perc_softclip`
+
 `--map_score_softclip`
