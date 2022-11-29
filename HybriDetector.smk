@@ -219,7 +219,6 @@ rule alignment_single_genomic:
     params: prefix = "mapped/to_genome/{sample}/{sample}.",
             read_len = lambda wildcards: cfg.loc[SAMPLES == wildcards.sample,"read_length"].min(), # Read length from the sequencing. Illumina sometimes reports N+1 http://seqanswers.com/forums/archive/index.php/t-31154.html
             map_perc = lambda wildcards: cfg.loc[SAMPLES == wildcards.sample,"map_perc_single_genomic"].min(),
-            map_score = lambda wildcards: cfg.loc[SAMPLES == wildcards.sample,"map_score_single_genomic"].min(),
             snakemake_dir = workflow.basedir + "/../"
     conda:  "wraps/alignment/env.yaml"
     script: "wraps/alignment/script.py"
@@ -423,7 +422,6 @@ rule alignment_softclip:
     resources:  mem = 34
     params: prefix = "mapped/softclip_genomic_noncoding/{sample}.",
             map_perc = lambda wildcards: cfg.loc[SAMPLES == wildcards.sample,"map_perc_softclip"].min(),
-            map_score = lambda wildcards: cfg.loc[SAMPLES == wildcards.sample,"map_score_softclip"].min(),
     conda:  "wraps/alignment_softclip/env.yaml"
     script: "wraps/alignment_softclip/script.py"
 

@@ -38,7 +38,7 @@ command = STAR+" --runMode alignReads --runThreadN " + str(snakemake.threads) + 
                " --outFilterMismatchNoverReadLmax 0.1" + \
                " --outFilterMismatchNoverLmax 0.1" + \
                " --alignMatesGapMax 1000000" + \
-               " --outFilterMatchNmin 0 --outFilterScoreMinOverLread " + str(snakemake.params.map_score)+" --outFilterMatchNminOverLread " + str(snakemake.params.map_perc)+ \
+               " --outFilterMatchNmin 0 --outFilterScoreMinOverLread " + str(snakemake.params.map_perc)+" --outFilterMatchNminOverLread " + str(snakemake.params.map_perc)+ \
                " --outSAMheaderHD @HD VN:1.4 SO:coordinate" + \
                " --outSAMattrRGline ID:"+str(snakemake.wildcards.sample)+" PL:Illumina PU:"+str(snakemake.wildcards.sample)+" SM:"+str(snakemake.wildcards.sample) + \
                " --outSAMunmapped Within --outSAMattributes All " + \
