@@ -190,15 +190,15 @@ run_all <- function(args){
   all_hybrids_collapsed_unified_high_confidence <- all_hybrids_collapsed_unified[noncodingRNA_nomm == TRUE]
   all_hybrids_collapsed_unified_pub_high_confidence <- all_hybrids_collapsed_unified_pub[`Driver alignment no mismatch` == TRUE]
   if (merged == TRUE) {
-    write.table(all_hybrids_collapsed_unified,paste0(c("hyb_pairs/Merged.hybrids_deduplicated_filtered_collapsed_unified_length_all_types_",is_ambiguous,".tsv"),collapse = ""), sep = "\t",quote = F,row.names = F)
-    write.table(all_hybrids_collapsed_unified_high_confidence,paste0(c("hyb_pairs/Merged.hybrids_deduplicated_filtered_collapsed_unified_length_all_types_",is_ambiguous,"_high_confidence.tsv"),collapse = ""), sep = "\t",quote = F,row.names = F)
-    write.table(all_hybrids_collapsed_unified_pub,paste0(c("hyb_pairs/Merged.hybrids_deduplicated_filtered_collapsed_unified_length_all_type_",is_ambiguous,"_pubout.tsv"),collapse = ""), sep = "\t",quote = F,row.names = F)
-    write.table(all_hybrids_collapsed_unified_pub_high_confidence,paste0(c("hyb_pairs/Merged.hybrids_deduplicated_filtered_collapsed_unified_length_all_types_",is_ambiguous,"_high_confidence_pubout.tsv"),collapse = ""), sep = "\t",quote = F,row.names = F)
+    write.table(all_hybrids_collapsed_unified,paste0(c("hyb_pairs/Merged.unified_length_all_types_",is_ambiguous,".tsv"),collapse = ""), sep = "\t",quote = F,row.names = F)
+    write.table(all_hybrids_collapsed_unified_high_confidence,paste0(c("hyb_pairs/Merged.unified_length_all_types_",is_ambiguous,"_high_confidence.tsv"),collapse = ""), sep = "\t",quote = F,row.names = F)
+    write.table(all_hybrids_collapsed_unified_pub,paste0(c("hyb_pairs/Merged.unified_length_all_type_",is_ambiguous,"_finalout.tsv"),collapse = ""), sep = "\t",quote = F,row.names = F)
+    write.table(all_hybrids_collapsed_unified_pub_high_confidence,paste0(c("hyb_pairs/Merged.unified_length_all_types_",is_ambiguous,"_high_confidence_finalout.tsv"),collapse = ""), sep = "\t",quote = F,row.names = F)
   } else {
-    write.table(all_hybrids_collapsed_unified,paste0(c("hyb_pairs/",sample,".hybrids_deduplicated_filtered_collapsed_unified_length_all_types_",is_ambiguous,".tsv"),collapse = ""), sep = "\t",quote = F,row.names = F)
-    write.table(all_hybrids_collapsed_unified_high_confidence,paste0(c("hyb_pairs/",sample,".hybrids_deduplicated_filtered_collapsed_unified_length_all_types_",is_ambiguous,"_high_confidence.tsv"),collapse = ""), sep = "\t",quote = F,row.names = F)
-    write.table(all_hybrids_collapsed_unified_pub,paste0(c("hyb_pairs/",sample,".hybrids_deduplicated_filtered_collapsed_unified_length_all_types_",is_ambiguous,"_pubout.tsv"),collapse = ""), sep = "\t",quote = F,row.names = F)
-    write.table(all_hybrids_collapsed_unified_pub_high_confidence,paste0(c("hyb_pairs/",sample,".hybrids_deduplicated_filtered_collapsed_unified_length_all_types_",is_ambiguous,"_high_confidence_pubout.tsv"),collapse = ""), sep = "\t",quote = F,row.names = F)
+    write.table(all_hybrids_collapsed_unified,paste0(c("hyb_pairs/",sample,".unified_length_all_types_",is_ambiguous,".tsv"),collapse = ""), sep = "\t",quote = F,row.names = F)
+    write.table(all_hybrids_collapsed_unified_high_confidence,paste0(c("hyb_pairs/",sample,".unified_length_all_types_",is_ambiguous,"_high_confidence.tsv"),collapse = ""), sep = "\t",quote = F,row.names = F)
+    write.table(all_hybrids_collapsed_unified_pub,paste0(c("hyb_pairs/",sample,".unified_length_all_types_",is_ambiguous,"_finalout.tsv"),collapse = ""), sep = "\t",quote = F,row.names = F)
+    write.table(all_hybrids_collapsed_unified_pub_high_confidence,paste0(c("hyb_pairs/",sample,".unified_length_all_types_",is_ambiguous,"_high_confidence_pubout_finalout.tsv"),collapse = ""), sep = "\t",quote = F,row.names = F)
   }
 }
 # run as Rscript

@@ -44,14 +44,13 @@ wildcard_constraints:
 
 def all_inputs(wildcards):
     if len(SAMPLES) > 1:
-        return expand("hyb_pairs/{sample}.hybrids_deduplicated_filtered_collapsed_unified_length_all_types_{type}_high_confidence.tsv", sample = "Merged", type = ["unique","ambiguous"])
+        return expand("hyb_pairs/{sample}.unified_length_all_types_{type}_high_confidence.tsv", sample = "Merged", type = ["unique","ambiguous"])
     else: 
-        return expand("hyb_pairs/{sample}.hybrids_deduplicated_filtered_collapsed_unified_length_all_types_{type}_high_confidence.tsv", sample = SAMPLES, type = ["unique","ambiguous"])
+        return expand("hyb_pairs/{sample}.unified_length_all_types_{type}_high_confidence.tsv", sample = SAMPLES, type = ["unique","ambiguous"])
 
 rule all:
     input:
         pair_collapsed_unified = all_inputs
-        #pair_collapsed_unified = expand("hyb_pairs/{sample}.hybrids_deduplicated_filtered_collapsed_unique.tsv", sample = SAMPLES)
 
 rule prepare_ref:
     input: 
@@ -463,8 +462,8 @@ rule filter_and_collapse:
             repeatmasker_bed = REPEATMASKER,
             transcripts = TRANSCRIPTS,
             features = FEATURES,
-    output: pair_collapsed_unique = "hyb_pairs/{sample}.hybrids_deduplicated_filtered_collapsed_unique.tsv",
-            pair_collapsed_ambiguous = "hyb_pairs/{sample}.hybrids_deduplicated_filtered_collapsed_ambiguous.tsv",          
+    output: pair_collapsed_unique = "hyb_pairs/{sample}.unique.tsv",
+            pair_collapsed_ambiguous = "hyb_pairs/{sample}.ambiguous.tsv",          
     log:    run = "sample_logs/{sample}/filter_and_collapse.log"
     threads: 1
     resources:  mem = 34
@@ -475,11 +474,11 @@ rule filter_and_collapse:
 
 
 rule merge_replicates:
-    input:  hyb_pairs = expand("hyb_pairs/{sample}.hybrids_deduplicated_filtered_collapsed_{{type}}.tsv", sample = SAMPLES),
+    input:  hyb_pairs = expand("hyb_pairs/{sample}.{{type}}.tsv", sample = SAMPLES),
             repeatmasker_bed = REPEATMASKER,
             transcripts = TRANSCRIPTS,
             features = FEATURES,
-    output: merged = "hyb_pairs/Merged.hybrids_deduplicated_filtered_collapsed_{type}.tsv",        
+    output: merged = "hyb_pairs/Merged.{type}.tsv",        
     log:    run = "sample_logs/Merged_{type}/merge_replicates.log"
     threads: 1
     resources:  mem = 34
@@ -490,11 +489,11 @@ rule merge_replicates:
     script: "wraps/merge_replicates/script.py"
 
 rule unify_length:
-    input:  hyb_pairs = "hyb_pairs/{sample}.hybrids_deduplicated_filtered_collapsed_{type}.tsv",
+    input:  hyb_pairs = "hyb_pairs/{sample}.{type}.tsv",
             repeatmasker_bed = REPEATMASKER,
             transcripts = TRANSCRIPTS,
             features = FEATURES,
-    output: pair_collapsed_unified = "hyb_pairs/{sample}.hybrids_deduplicated_filtered_collapsed_unified_length_all_types_{type}_high_confidence.tsv",          
+    output: pair_collapsed_unified = "hyb_pairs/{sample}._unified_length_all_types_{type}_high_confidence.tsv",          
     log:    run = "sample_logs/{sample}_{type}/unify_length.log"
     threads: 1
     resources:  mem = 34
