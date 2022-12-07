@@ -55,53 +55,91 @@ All of the outputs are stored within a folder `HybriDetector/hyb_pairs/`.
 
 Two main branches of the output file are created based on the alignment uniqueness of the non-coding RNA part of the detected chimeric interaction. In a case, where the identified non-coding RNA part of the hybrid uniquely align to just one non-coding RNA, these interactions are treated as `unique`. All the rest are reported as `ambiguous`. All of the hybrid outputs are named considering that. The list of important outputs and their description:
 
-##### `{sample}.unified_length_*_types_*_high_confidence_finalout.tsv`
+#### `{sample}.unified_length_*_types_*_high_confidence_finalout.tsv`
 The main and final output containing all identified hybrid interactions together with their annotations. Description of individual columns:
 
 `ID` - unique identifier of the obtained hybrid interaction.
+
 `Genomic fragment sequence` - Sequence of genomic part of the hybrid interaction anchored to the middle and prolong equally at both ends to the length of 50 nt (in case obtained sequence was longer than 50 nt, it is cut equally from both sides to the lenght of 50 nt). 
+
 `Driver fragment sequence` - Sequence of non-coding RNA part of the hybrid interaction.
+
 `Target first in chimera` - True when the order of the hzbrid parts was target-driver (mRNA-noncodingRNA).
+
 `N chimeric reads` - Number of reads supporting obtained hybrid interaction.
+
 `N deduplicated chimeric reads` - Number of reads supporting obtained hybrid interaction after deduplication with UMIs (available only when used with UMIs).
+
 `Chimera in replicates` - List of replicates, where particular hybrid interactoin occured (available only when replicates provided).
+
 `N non-chimeric reads` - Number of *non-chimeric single genomic* reads supporting obtained hybrid interaction.
+
 `Coverage non-chimeric reads` - Normalized coverage of *non-chimeric single genomic* reads supporting obtained hybrid interaction.
+
 `Chromosome` - Chromosome where hybrid interaction occured.
+
 `Start` - Start of the loci, where genomic part of the hybrid was mapped to.
+
 `End` - End of the loci, where genomic part of the hybrid was mapped to.
+
 `Strand` - Whether the obtained hybrid interaction occured on the forward or reverse genomic strand.
+
 `Overlapping gene name` - Gene name in which hybrid interaction was detected.
+
 `Overlapping gene biotype` - Biotype of the gene (protein coding, antisense, etc.) in which hybrid interaction was detected.
+
 `Overlapping gene feature` - At which genomic feature (exon, intron, etc.) hybrid interaction was detected.
+
 `Overlapping repeatmasker` - Whether the loci, where hybrid interaction was detected overlap with any record in RepeatMasker annotation.
+
 `Overlapping repeatmasker family` - Into which family the RepeatMasker record belongs to (in case the RepeatMasker overlap is detected).
+
 `Driver name` - Name of mapped non-coding RNA.
+
 `Driver type` - Type of the non-coding RNA (from the list above) obtained within hybrid interaction.
-`miRNA Family` - Family to which microRNA belongs to (in case that non-coding RNA type is microRNA)
-`Driver alignment no mismatch` - Whether the gathered sequence of non-coding hybrid part mapped perfectly to its reference. 
+
+`miRNA Family` - Family to which microRNA belongs to (in case that non-coding RNA type is microRNA).
+
+`Driver alignment no mismatch` - Whether the gathered sequence of non-coding hybrid part mapped perfectly to its reference.
+
 `Cofold structure` - Folded secondary structure of obtained hybrid interaction predicted utilizing ViennaRNA toolkit.
+
 `Cofold MFE` - Free energyof predicted folded secondary structure.
 
-##### `{sample}.unified_length_*_types_*_finalout.tsv`
+#### `{sample}.unified_length_*_types_*_finalout.tsv`
 This output table contain the same columns as the main output file, the difference rests in not using of filtering based on "Driver alignment no mismatch" column. Within this output file, there are both these hybrid interactions where seqeunce of non-coding RNA part mapped perfectly to the reference and these where aligment shows up to 2 mismatches.  
 
-##### `{sample}.all_hyb_pairs.tsv`
+#### `{sample}.all_hyb_pairs.tsv`
 First and raw intermediate output. Contains all af the obtained hybrid interaction pairs, without any filtering and deduplication. Description of individual columns:
 
 `read_name` - Original name of sequenced read, where hybrid interaction was identified.
+
 `flag.g` - Bitwise FLAG assigned by STAR aligner for the mapping of genomic part of the hybrid interaction. 
+
 `chr.g` - Chromosome where mapping of genomic part of the hybrid interaction occured.
+
 `pos.g` - Start of the loci, where genomic part of the hybrid was mapped to.
+
 `qual.g` - Mapping quality assigned by STAR aligner for the mapping of genomic part of the hybrid interaction. 
+
 `cigar.g` - CIGAR string assigned by STAR aligner (describes the precision of mapping) for the mapping of genomic part of the hybrid interaction.
+
 `seq.g` - Sequence of genomic part of the hybrid interaction.
+
 `gene_name` - Gene name in which hybrid interaction was detected.
+
 `strand` - Whether the obtained hybrid interaction occured on the forward or reverse genomic strand.
+
 `smallrna` - Name of mapped non-coding RNA.
+
 `pos.m` - Start of the loci, where non-coding RNA part of the hybrid was mapped to.
+
 `qual.m` -  Mapping quality assigned by STAR aligner for the mapping of non-coding RNA part of the hybrid interaction.
+
 `cigar.m` - CIGAR string assigned by STAR aligner (describes the precision of mapping) for the mapping of non-coding RNA part of the hybrid interaction.
+
 `seq.m` - Sequence of non-coding RNA part of the hybrid interaction. 
+
 `forward_dir` - True when the order of the hybrid parts was target-driver (mRNA-noncodingRNA).
+
 `UMI` - Sequence of UMI for particular sequenced read used further for the deduplication.
