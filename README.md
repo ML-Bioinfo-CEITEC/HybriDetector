@@ -37,17 +37,27 @@ Required input is already preprocessed zipped fastq file with precisely removed 
 
 ### Arguments 
 
-`--sample` - fastq file names here written without the ".fastq.gz" suffix sepparated by space
+`--sample` - Fastq file names here written without the ".fastq.gz" suffix separated by space.
 
-`--read_length` - [75] maximal lenght of seqeunced read within input fastq file (integer)
+`--read_length` - [75] Maximal length of sequenced read within input fastq file (integer).
 
-`--is_umi` - [FALSE] specify whether your library contains extracted UMIs in the read header (boolean)
+`--is_umi` - [FALSE] Specify whether your library contains extracted UMIs in the read header (boolean).
 
-`--map_perc_single_genomic` - [0.85] specify the percentage when the alignment of single genomic non-chimeric reads will be reported. Only if the ratio of "aligned length / read length" is higher than or equal to this
+`--map_perc_single_genomic` - [0.85] Specify the percentage when the alignment of single genomic non-chimeric reads will be reported. Only if the ratio of "aligned length / read length" is higher than or equal to this
 value, the alignemnt will be output.
 
-`--map_perc_softclip` - [0.75] specify the percentage when the alignment of genomic part of the chimeric reads will be reported. Only if the ratio of "aligned length / read length" is higher than or equal to this
+`--map_perc_softclip` - [0.75] Specify the percentage when the alignment of genomic part of the chimeric reads will be reported. Only if the ratio of "aligned length / read length" is higher than or equal to this
 value, the alignemnt will be output.
+
+`--cores - [6] Number of provided CPUs.`
+
+`--ram - [24] Number of provided RAM in GB.`
+
+### Usage examples
+
+`python HybriDetector.py --sample SAMPLE1.fastq.gz SAMPLE2.fastq.gz --read_length 75 --is_umi FALSE --map_perc_single_genomic 0.85 --map_perc_softclip 0.75 --cores 6 --ram 24` 
+
+Command above starts analysis based on two already trimmed replicates where there are UMIs not used requiring 6 CPU cores and 24 GB of RAM.
 
 ### Output files
 
@@ -143,3 +153,9 @@ First and raw intermediate output. Contains all af the obtained hybrid interacti
 `forward_dir` - True when the order of the hybrid parts was target-driver (mRNA-noncodingRNA).
 
 `UMI` - Sequence of UMI for particular sequenced read used further for the deduplication.
+
+#### Folders in a path `HybriDetector/hyb_pairs/cofold*`
+Within these output folders can be found folded secondary structure predicted by utilizing of ViennaRNA toolkit in a postscript format. Each predicted secondary structure can be matched with obtained hybrid interaction by concatenation of the `target` and `driver` sequence with `&` as separator, as all predicted secondary structure are named in such format.
+
+### Tool list
+Tools incorporated into the HybriDetector pipeline necesarry to gather the hybrid interactions are `FastQC, Samtools, STAR, deepTools, UMI-tools, Picard, r-data.table, r-seqinr,r-stringi, r-proxy, bioconductor-biostrings, bioconductor-rtracklayer, bioconductor-genomicranges, bioconductor-bsgenome.hsapiens.ucsc.hg38, bioconductor-mirbaseconverter`. 
