@@ -5,7 +5,7 @@ Convolutional Neural Network for prediction of smallRNA:target site binding base
 
 ### Web application
 
-The user-friendly web application for miRNA and tRNA target predictions https://evaklimentova.github.io/smallRNA_binding/
+The user-friendly web application for miRNA and tRNA target predictions https://ml-bioinfo-ceitec.github.io/HybriDetector/
 
 
 ## Installation of standalone version
