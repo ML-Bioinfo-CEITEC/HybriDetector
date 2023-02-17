@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<meta charset="utf-8"/>
+
+<head>
+    <TITLE>smallRNA binding</TITLE>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/HybriDetector/ML/Webpage/style.css">
+    <!--<link rel="stylesheet" href="/HybriDetector/ML/Webpage/style.css">-->
+</head>
+
+<body>
+
+<div class="site">
+<div class="site-header site-element">
+    <div id="menuItems" class="menuItems">
+        <div class="menuItem" onclick="openTab('miRNA', 0)">miRNA</div>
+        <div class="menuItem" onclick="openTab('tRNA', 1)">tRNA</div>
+    </div>
+    <div id="navTool" class="navTool"></div>
+</div>
+
+<div class="site-body site-element">
+    <div id="miRNA" class="bar tab" style="">
+        <form method="post" enctype="multipart/form-data">
+            <h4><strong>miRNA - target binding prediction tool</strong></h4>
+            <br/><br/>
+            <p>Insert miRNA sequences (20 nt) here (line separated)</p>
+
+            <div><textarea name="smallRNA" id="smallRNA" style="width:70%;height:100px;"
+                           placeholder="Paste miRNA sequences" required></textarea></div>
+            <br/>
+            <p>Insert target mRNA sequences (50 nt) here (line separated)</p>
+            <div><textarea name="target" id="target" style="width:70%;height:100px;" placeholder="Paste mRNA sequences"
+                           required></textarea></div>
+            <br/>
+
+            <button class="button" type="button" value="Load example" name="example" onclick="loadExample('miRNA')">Load example
+            </button>
+            <input class="button" type="reset" value="Reset" name="reset">
+            <button class="button" type="button" value="Submit" name="submit" onclick="makePrediction('miRNA')">Submit</button>
+            <br/><br/>
+            <div class="warning" id="warning"></div>
+            <br/>
+            <div class="result" id="result"></div>
+            <br/>
+        </form>
+    </div>
+
+
+    <div id="tRNA" class="bar tab" style="display: none">
+        <form method="post" enctype="multipart/form-data">
+            <h4><strong>tRNA - target binding prediction tool</strong></h4>
+            <br/><br/>
+            <p>Insert tRNA sequences (20 nt) here (line separated)</p>
+
+            <div><textarea name="smallRNA" id="smallRNA" style="width:70%;height:100px;"
+                           placeholder="Paste tRNA sequences" required></textarea></div>
+            <br/>
+            <p>Insert target mRNA sequences (50 nt) here (line separated)</p>
+            <div><textarea name="target" id="target" style="width:70%;height:100px;" placeholder="Paste mRNA sequences"
+                           required></textarea></div>
+            <br/>
+
+            <button class="button" type="button" value="Load example" name="example2" onclick="loadExample('tRNA')">Load example
+            </button>
+            <input class="button" type="reset" value="Reset" name="reset">
+            <button class="button" type="button" value="Submit" name="submit" onclick="makePrediction('tRNA')">Submit</button>
+            <br/><br/>
+            <div class="warning" id="warning"></div>
+            <br/>
+            <div class="result" id="result"></div>
+            <br/>
+        </form>
+    </div>
+</div>
+
+<div id="footer-2-cols" class="site-footer site-element">
+    For more information see <a href="https://github.com/ML-Bioinfo-CEITEC/HybriDetector/tree/main/ML">https://github.com/ML-Bioinfo-CEITEC/HybriDetector/tree/main/ML</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"></script>
+<script src="/HybriDetector/ML/Webpage/script.js"></script>
+<!--<script src="/HybriDetector/ML/Webpage/script.js"></script>-->
+
+</body>
+
+</HTML>
