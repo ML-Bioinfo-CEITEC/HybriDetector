@@ -26,8 +26,8 @@ To install HybriDetector, you need the following prerequisites:
 If you do not have [Anaconda](https://www.anaconda.com/distribution/) installed on your computer, please do so first. 
 - Download the latest release from [the repository](https://github.com/ML-Bioinfo-CEITEC/CLASH) with `git clone https://github.com/ML-Bioinfo-CEITEC/HybriDetector.git`
 - Go to the project directory `cd HybriDetector`
-- Recreate environment from yml file `conda env create -f snakemake.yml`
-- Activate the environment `conda activate snakemake`
+- Recreate environment from yml file `conda env create -f HybriDetector_env.yml`
+- Activate the environment `conda activate HybriDetector_env`
 - Create the folder for the input file/s called "data" `mkdir data`
 - Run the app `snakemake --snakefile HybriDetector.smk --configfile configuration_file.json  --use-conda --conda-frontend mamba -p --res mem=100 -j 20`
 - All of the references, databases and annotations are either directly colned with the repository or downloaded during the first run of the tool.

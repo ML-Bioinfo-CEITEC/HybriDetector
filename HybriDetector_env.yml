@@ -1,0 +1,8 @@
+name: HybriDetector_env
+channels:
+  - bioconda
+  - r
+  - conda-forge
+  - defaults
+dependencies:
+  - snakemake = 7.18.2
