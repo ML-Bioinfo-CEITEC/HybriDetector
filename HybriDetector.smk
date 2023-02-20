@@ -72,7 +72,7 @@ REF = "DBs/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz"
 
 rule fastqc:
 	input:	
-		reads = "preprocessed/{sample}.fastq.gz"
+		reads = "data/{sample}.fastq.gz"
 	output:
 		html = "raw_fastq_qc/{sample}.fastqc.html"
 	log:
@@ -207,7 +207,7 @@ rule STAR_yrna_ucsc_gen_index:
     script: "wraps/STAR_gen_index/script.py"
 
 rule alignment_single_genomic:
-    input:  fastq = "preprocessed/{sample}.fastq.gz",
+    input:  fastq = "data/{sample}.fastq.gz",
             genome = REF,
             index = "index/STAR/SAindex",
     output: bam = "mapped/to_genome/{sample}.to_genome.bam",
