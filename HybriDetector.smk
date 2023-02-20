@@ -493,7 +493,7 @@ rule unify_length:
             repeatmasker_bed = REPEATMASKER,
             transcripts = TRANSCRIPTS,
             features = FEATURES,
-    output: pair_collapsed_unified = "hyb_pairs/{sample}._unified_length_all_types_{type}_high_confidence.tsv",          
+    output: pair_collapsed_unified = "hyb_pairs/{sample}.unified_length_all_types_{type}_high_confidence.tsv",          
     log:    run = "sample_logs/{sample}_{type}/unify_length.log"
     threads: 1
     resources:  mem = 34
