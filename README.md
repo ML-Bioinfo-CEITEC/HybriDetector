@@ -37,7 +37,7 @@ Required input is already preprocessed zipped fastq file with precisely removed 
 
 ### Arguments 
 
-`--sample` - Fastq file names here written without the ".fastq.gz" suffix separated by space.
+`--input_sample` - Fastq file names here written without the ".fastq.gz" suffix separated by comma.
 
 `--read_length` - [75] Maximal length of sequenced read within input fastq file (integer).
 
@@ -55,7 +55,7 @@ value, the alignemnt will be output.
 
 ### Usage examples
 
-`python HybriDetector.py --sample SAMPLE1.fastq.gz SAMPLE2.fastq.gz --read_length 75 --is_umi FALSE --map_perc_single_genomic 0.85 --map_perc_softclip 0.75 --cores 6 --ram 24` 
+`python HybriDetector.py --input_sample SAMPLE1.fastq.gz,SAMPLE2.fastq.gz --read_length 75 --is_umi FALSE --map_perc_single_genomic 0.85 --map_perc_softclip 0.75 --cores 6 --ram 24` 
 
 Command above starts analysis based on two already trimmed replicates where there are UMIs not used requiring 6 CPU cores and 24 GB of RAM.
 
