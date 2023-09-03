@@ -70,27 +70,15 @@ def write_config_file(config_sheet):
 def run_snakemake(config_sheet):
     work_dir = os.getcwd()
     snakefile = f'{work_dir}/HybriDetector.smk'
-    directory = work_dir
     configfile = f'{work_dir}/config.json'
     ram = config_sheet["ram"].min()
     cpu = config_sheet["cores"].min()
-
-    command = "snakemake --snakefile " + snakefile + " --directory " + directory + " --configfile " + configfile + " --use-conda --conda-frontend mamba -p --res mem=" + str(ram) + " --jobs " + str(cpu)
+    command = "snakemake --snakefile " + snakefile + " --directory " + work_dir + " --configfile " + configfile + " --use-conda --conda-frontend mamba -p --res mem=" + str(ram) + " --jobs " + str(cpu)
     print("Executed command:\n")
     print(command)
     print("\nTask is being processed!")
-
     shell(command)
 
-    #snakemake --snakefile HybriDetector.smk --directory /home/vasek/Documents/CLASH_snakemake_github/HybriDetector --configfile configuration_file.json  --use-conda --conda-frontend mamba -p --res mem=100 -n -r
-    #status = snakemake.snakemake(snakefile, configfile=paramsfile,
-    #                             targets=[target], printshellcmds=True,
-    #                             dryrun=args.dry_run, forceall=args.force,
-    #                             config=config)
-    #
-    #if status: # translate "success" into shell exit code of 0
-    #   return 0
-    #return 1
 if __name__ == '__main__':
     main()  
 
