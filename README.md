@@ -159,3 +159,13 @@ Within these output folders can be found folded secondary structure predicted by
 
 ### Tool list
 Tools incorporated into the HybriDetector pipeline necesarry to gather the hybrid interactions are `FastQC, Samtools, STAR, deepTools, UMI-tools, Picard, r-data.table, r-seqinr,r-stringi, r-proxy, bioconductor-biostrings, bioconductor-rtracklayer, bioconductor-genomicranges, bioconductor-bsgenome.hsapiens.ucsc.hg38, bioconductor-mirbaseconverter`. 
+
+## Citing HybriDetector
+
+If you use HybriDetector in your research, please cite the following article:
+
+Hejret, Vaclav, et al. [Analysis of chimeric reads characterises the diverse targetome of AGO2-mediated regulation.](https://doi.org/10.1038/s41598-023-49757-z) Scientific Reports 13.1 (2023): 22895.
+
+## Data availability
+
+AGO2-CLASH data used in the publication are deposited in GEO with accession number [GSE221573](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE221573).
