@@ -44,9 +44,9 @@ wildcard_constraints:
 
 def all_inputs(wildcards):
     if len(SAMPLES) > 1:
-        return expand("hyb_pairs/{sample}.unified_length_all_types_{type}_high_confidence.tsv", sample = "Merged", type = ["unique","ambiguous"])
+        return expand("hyb_pairs/{sample}.unified_length_all_types_{type}_high_confidence_preclusters.tsv", sample = "Merged", type = ["unique","ambiguous"])
     else: 
-        return expand("hyb_pairs/{sample}.unified_length_all_types_{type}_high_confidence.tsv", sample = SAMPLES, type = ["unique","ambiguous"])
+        return expand("hyb_pairs/{sample}.unified_length_all_types_{type}_high_confidence_preclusters.tsv", sample = SAMPLES, type = ["unique","ambiguous"])
 
 rule all:
     input:
@@ -452,7 +452,7 @@ rule get_pairs:
     script: "wraps/get_pairs/script.py"
 
 rule filter_and_collapse:
-    input:  hyb_pairs = "hyb_pairs/{sample}.hyb_pairs_deduplicated.tsv",
+    input:  hyb_pairs = "hyb_pairs/{sample}.hyb_pairs_deduplicated_subset.tsv",
             mirna_db = REF_MIR,
             trna_db = REF_TRNA,
             rrna_db = REF_RRNA,
@@ -462,8 +462,8 @@ rule filter_and_collapse:
             repeatmasker_bed = REPEATMASKER,
             transcripts = TRANSCRIPTS,
             features = FEATURES,
-    output: pair_collapsed_unique = "hyb_pairs/{sample}.unique.tsv",
-            pair_collapsed_ambiguous = "hyb_pairs/{sample}.ambiguous.tsv",          
+    output: pair_collapsed_unique = "hyb_pairs/{sample}.unique_preclusters.tsv",
+            pair_collapsed_ambiguous = "hyb_pairs/{sample}.ambiguous_preclusters.tsv",          
     log:    run = "sample_logs/{sample}/filter_and_collapse.log"
     threads: 1
     resources:  mem = 34
@@ -489,11 +489,11 @@ rule merge_replicates:
     script: "wraps/merge_replicates/script.py"
 
 rule unify_length:
-    input:  hyb_pairs = "hyb_pairs/{sample}.{type}.tsv",
+    input:  hyb_pairs = "hyb_pairs/{sample}.{type}_preclusters.tsv",
             repeatmasker_bed = REPEATMASKER,
             transcripts = TRANSCRIPTS,
             features = FEATURES,
-    output: pair_collapsed_unified = "hyb_pairs/{sample}.unified_length_all_types_{type}_high_confidence.tsv",          
+    output: pair_collapsed_unified = "hyb_pairs/{sample}.unified_length_all_types_{type}_high_confidence_preclusters.tsv",          
     log:    run = "sample_logs/{sample}_{type}/unify_length.log"
     threads: 1
     resources:  mem = 34
