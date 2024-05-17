@@ -452,7 +452,7 @@ rule get_pairs:
     script: "wraps/get_pairs/script.py"
 
 rule filter_and_collapse:
-    input:  hyb_pairs = "hyb_pairs/{sample}.hyb_pairs_deduplicated_subset.tsv",
+    input:  hyb_pairs = "hyb_pairs/{sample}.hyb_pairs_deduplicated.tsv",
             mirna_db = REF_MIR,
             trna_db = REF_TRNA,
             rrna_db = REF_RRNA,

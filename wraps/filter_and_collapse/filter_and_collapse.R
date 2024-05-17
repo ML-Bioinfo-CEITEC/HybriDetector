@@ -570,8 +570,8 @@ run_all <- function(args){
 	ambiguous_tab$noncoding_unique <- NULL
 	unique_tab$noncoding_unique <- NULL
 	#this file contains all detected chimeric pairs deduplicated filtered and collapsed
-	write.table(unique_tab,paste0(c("hyb_pairs/",sample,".unique.tsv"),collapse = ""), sep = "\t",quote = F,row.names = F)
-	write.table(ambiguous_tab,paste0(c("hyb_pairs/",sample,".ambiguous.tsv"),collapse = ""), sep = "\t",quote = F,row.names = F)
+	write.table(unique_tab,paste0(c("hyb_pairs/",sample,".unique_preclusters.tsv"),collapse = ""), sep = "\t",quote = F,row.names = F)
+	write.table(ambiguous_tab,paste0(c("hyb_pairs/",sample,".ambiguous_preclusters.tsv"),collapse = ""), sep = "\t",quote = F,row.names = F)
 
 }
 
