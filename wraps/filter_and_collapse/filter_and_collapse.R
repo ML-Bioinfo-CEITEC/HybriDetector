@@ -23,9 +23,6 @@ run_all <- function(args){
 
 	pair_occurence_sequence <- fread(hybrids)
 
-	# Writing unique to a TSV file - SS
-	write.table(pair_occurence_sequence, file = "/homes/ssamm10/HybriDetector/debug/pair_occurence_sequence.tsv", sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
-
 	##########################################
 	#repeatmasker to remove 
 	remove_repeatmasker <- c("Helitron1Na_Mam","(G)n")
@@ -33,17 +30,11 @@ run_all <- function(args){
 
 	pair_occurence_sequence <- pair_occurence_sequence[order(chr.g,smallrna,pos.g)]
 
-	# Writing unique to a TSV file - SS
-	write.table(pair_occurence_sequence, file = "/homes/ssamm10/HybriDetector/debug/pair_occurence_sequence2.tsv", sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
-
 	###############################
 	###collapse reads
 	pair_occurence_sequence_filt <- pair_occurence_sequence[mrna_length == TRUE & mrna_aln == TRUE & !repeatmasker %in% remove_repeatmasker & !(A_perc > 50 | C_perc > 50 | G_perc > 50 | T_perc > 50 )& driver_length <= 30]
 	pair_occurence_sequence_filt_print <- pair_occurence_sequence[mrna_length == TRUE & mrna_aln == TRUE & !repeatmasker %in% remove_repeatmasker & !(A_perc > 50 | C_perc > 50 | G_perc > 50 | T_perc > 50 & driver_length <= 30)]
 	pair_occurence_sequence_filt$driver_length <- NULL
-
-	# Writing unique to a TSV file - SS
-	write.table(pair_occurence_sequence_filt, file = "/homes/ssamm10/HybriDetector/debug/pair_occurence_sequence_filt.tsv", sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 	#collapse all targets starting on the same position in genome, get the longest alignment across these targets and sum Ndups and Nunique
 	# to deduplicate same targets with different UMIs
@@ -52,8 +43,6 @@ run_all <- function(args){
 																by=.(chr.g,pos.g,flag.g,smallrna,smallRNA_fam,strand,forward_dir,smallrna_nomm,mrna_length,
                                                                 cov,Nreads,mrna_aln,mrna_aln2,mrna_aln5,mrna_aln10,mrna_aln20)]
 
-		# Writing unique to a TSV file - SS
-		write.table(pair_occurence_sequence_filt, file = "/homes/ssamm10/HybriDetector/debug/pair_occurence_sequence_filt2.tsv", sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)														
 	
 	} else {
 		pair_occurence_sequence_filt <- pair_occurence_sequence_filt[,.(seq.g.len=max(nchar(seq.g)),seq.m=max(seq.m),Ndups=sum(Ndups)), 
@@ -67,9 +56,6 @@ run_all <- function(args){
 	pair_occurence_sequence_filt[noncodingRNA_type == 10]$noncodingRNA_type <- "YRNA"
 	pair_occurence_sequence_filt[noncodingRNA_type == "RNA"]$noncodingRNA_type <- "YRNA"
 	pair_occurence_sequence_filt[grepl("hsa",noncodingRNA_type)]$noncodingRNA_type <- "miRNA"
-
-	# Writing unique to a TSV file - SS
-	write.table(pair_occurence_sequence_filt, file = "/homes/ssamm10/HybriDetector/debug/pair_occurence_sequence_filt3.tsv", sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 	#add sequence of full noncoding RNA
 	#####################################
@@ -114,9 +100,6 @@ run_all <- function(args){
 	pair_occurence_sequence_filt <- merge(pair_occurence_sequence_filt,wholedb,by.x = "smallrna",by.y = "seq_name", all.x =T)
 	names(pair_occurence_sequence_filt)[names(pair_occurence_sequence_filt) == 'sequence'] <- 'noncodingRNA_seq'
 
-	# Writing unique to a TSV file - SS
-	write.table(pair_occurence_sequence_filt, file = "/homes/ssamm10/HybriDetector/debug/pair_occurence_sequence_filt4.tsv", sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
-
 	#first collapse by position and mirna name - faster
 	pair_occurence_sequence_filt <- pair_occurence_sequence_filt[order(chr.g,pos.g)]
 	pair_occurence_sequence_filt[,new_start:=c(-21,pos.g[-length(pos.g)]), by=.(chr.g,smallrna)]
@@ -126,9 +109,6 @@ run_all <- function(args){
 	if(i > 1)
 	  set(pair_occurence_sequence_filt, i, "new_pos", pair_occurence_sequence_filt$new_pos[i-1L])
 	}
-
-	# Writing unique to a TSV file - SS
-	write.table(pair_occurence_sequence_filt, file = "/homes/ssamm10/HybriDetector/debug/pair_occurence_sequence_filt5.tsv", sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 	if (is_umi == TRUE){
 		pair_occurence_sequence_filt_collap <- pair_occurence_sequence_filt[,.(seq.g.len = .SD[order(-new_pos)][which.max(new_pos+seq.g.len),seq.g.len],
@@ -152,9 +132,6 @@ run_all <- function(args){
 		                                                                       noncodingRNA_seq = noncodingRNA_seq[which.max(Nunique)]
 		),
 		by=.(chr.g,new_pos,smallrna)]
-
-		# Writing unique to a TSV file - SS
-		write.table(pair_occurence_sequence_filt_collap, file = "/homes/ssamm10/HybriDetector/debug/pair_occurence_sequence_filt_collap.tsv", sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 	} else {
 		pair_occurence_sequence_filt_collap <- pair_occurence_sequence_filt[,.(seq.g.len = .SD[order(-new_pos)][which.max(new_pos+seq.g.len),seq.g.len],
@@ -180,9 +157,6 @@ run_all <- function(args){
 	}  
 	pair_occurence_sequence_filt_collap <- pair_occurence_sequence_filt_collap[order(chr.g,new_pos)]
 
-	# Writing unique to a TSV file - SS
-	write.table(pair_occurence_sequence_filt_collap, file = "/homes/ssamm10/HybriDetector/debug/pair_occurence_sequence_filt_collap2.tsv", sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
-
 	#second collapse by position and smallrna sequence - faster
 	if (is_umi == TRUE){
 		pair_occurence_sequence_filt_collap_name <- pair_occurence_sequence_filt_collap[,.(smallrna = paste0(unique(smallrna),collapse = "|"),
@@ -206,9 +180,6 @@ run_all <- function(args){
 		                                                                                   noncodingRNA_seq = noncodingRNA_seq[which.max(Nunique)]
 		),
 		by=.(chr.g,new_pos,seq.m)]
-
-		# Writing unique to a TSV file - SS
-		write.table(pair_occurence_sequence_filt_collap_name, file = "/homes/ssamm10/HybriDetector/debug/pair_occurence_sequence_filt_collap_name.tsv", sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 	} else {
 		pair_occurence_sequence_filt_collap_name <- pair_occurence_sequence_filt_collap[,.(smallrna = paste0(unique(smallrna),collapse = "|"),
@@ -234,25 +205,20 @@ run_all <- function(args){
 	}  
 	pair_occurence_sequence_filt_collap_name <- pair_occurence_sequence_filt_collap_name[order(chr.g,new_pos)]
 	  
-	# Writing unique to a TSV file - SS
-	write.table(pair_occurence_sequence_filt_collap_name, file = "/homes/ssamm10/HybriDetector/debug/pair_occurence_sequence_filt_collap_name2.tsv", sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
-
 	clustering <- function(input_tab) {
 		#preclustering for memory efficiency
 		##calculate kmers for seq.m
 		kmers <-  t(sapply(input_tab$seq.m, function(x){x1 <-  DNAString(x)
                    oligonucleotideFrequency(x1,4)}))
-		#write.table(kmers, file = "/homes/ssamm10/HybriDetector/debug/kmers.tsv", sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
 		##perform kmeans clustering on kmer counts
 		set.seed(123)
 		preclusters <- kmeans(kmers,centers = 100,nstart = 25)$cluster
 		##join precluster labels to input table
 		input_tab <- cbind(input_tab,preclusters)
-		#write.table(input_tab, file = "/homes/ssamm10/HybriDetector/debug/preclusters.tsv", sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
-		for (clustnumber in sort(unique(preclusters)))
+		for (precluster_id in sort(unique(preclusters)))
 		{
 			#subset input table by precluster
-			input_tab_sub <- input_tab[preclusters == clustnumber]
+			input_tab_sub <- input_tab[preclusters == precluster_id]
 			#perform sequence similarity clustering
 			distance_noncoding <- adist(input_tab_sub$seq.m,input_tab_sub$seq.m)
 			mean_len_mat_noncoding <- as.matrix(proxy::dist(nchar(input_tab_sub$seq.m),method = function(x,y) (x+y)/2))
@@ -315,7 +281,7 @@ run_all <- function(args){
 		    		set(pair_occurence_sequence_filt_collap_clust, i, "new_pos", pair_occurence_sequence_filt_collap_clust$new_pos[i-1L])
 			}
 			if (is_umi == TRUE){
-				pair_occurence_sequence_filt_collap_clust_2_ <- pair_occurence_sequence_filt_collap_clust[,.(smallrna = paste0(unique(smallrna),collapse = "|"),
+				pair_occurence_sequence_filt_collap_clust_2_sub <- pair_occurence_sequence_filt_collap_clust[,.(smallrna = paste0(unique(smallrna),collapse = "|"),
 		                                                                                              end.g = .SD[order(-new_pos)][which.max(new_pos+seq.g.len),new_pos + seq.g.len],
 		                                                                                              smallRNA_fam = smallRNA_fam[which.max(Nunique)],
 		                                                                                              forward_dir = as.logical(max(forward_dir)),
@@ -337,7 +303,7 @@ run_all <- function(args){
 		                                                                                              noncodingRNA_seq = noncodingRNA_seq[which.max(Nunique)]),
 																									  by=.(chr.g,new_pos,noncoding_clust)]
 			} else {
-				pair_occurence_sequence_filt_collap_clust_2_ <- pair_occurence_sequence_filt_collap_clust[,.(smallrna = paste0(unique(smallrna),collapse = "|"),
+				pair_occurence_sequence_filt_collap_clust_2_sub <- pair_occurence_sequence_filt_collap_clust[,.(smallrna = paste0(unique(smallrna),collapse = "|"),
 		                                                                                              end.g = .SD[order(-new_pos)][which.max(new_pos+seq.g.len),new_pos + seq.g.len],
 		                                                                                              smallRNA_fam = smallRNA_fam[which.max(Ndups)],
 		                                                                                              forward_dir = as.logical(max(forward_dir)),
@@ -358,14 +324,14 @@ run_all <- function(args){
 		                                                                                              noncodingRNA_seq = noncodingRNA_seq[which.max(Ndups)]),
 																									  by=.(chr.g,new_pos,noncoding_clust)]
 			}
-			pair_occurence_sequence_filt_collap_clust_2_ <- pair_occurence_sequence_filt_collap_clust_2_[order(chr.g,new_pos)]
-			names(pair_occurence_sequence_filt_collap_clust_2_)[names(pair_occurence_sequence_filt_collap_clust_2_) == 'new_pos'] <- 'start.g'
-			names(pair_occurence_sequence_filt_collap_clust_2_)[names(pair_occurence_sequence_filt_collap_clust_2_) == 'strand'] <- 'strand.g'
+			pair_occurence_sequence_filt_collap_clust_2_sub <- pair_occurence_sequence_filt_collap_clust_2_sub[order(chr.g,new_pos)]
+			names(pair_occurence_sequence_filt_collap_clust_2_sub)[names(pair_occurence_sequence_filt_collap_clust_2_sub) == 'new_pos'] <- 'start.g'
+			names(pair_occurence_sequence_filt_collap_clust_2_sub)[names(pair_occurence_sequence_filt_collap_clust_2_sub) == 'strand'] <- 'strand.g'
 		# concatenate output of loop
-			if (clustnumber == 1){
-				pair_occurence_sequence_filt_collap_clust_2 <- pair_occurence_sequence_filt_collap_clust_2_
-			} else { # concatenate output of loop to the previous output
-				pair_occurence_sequence_filt_collap_clust_2 <- rbind(pair_occurence_sequence_filt_collap_clust_2,pair_occurence_sequence_filt_collap_clust_2_)
+			if (precluster_id == 1){ # for the first cluster (cluster numbering starts from 1) overwrite/initiate the table
+				pair_occurence_sequence_filt_collap_clust_2 <- pair_occurence_sequence_filt_collap_clust_2_sub
+			} else { # concatenate output of loop to the previous iteration's output
+				pair_occurence_sequence_filt_collap_clust_2 <- rbind(pair_occurence_sequence_filt_collap_clust_2,pair_occurence_sequence_filt_collap_clust_2_sub)
 			}	
 		} # this ends the loop		
 		return(pair_occurence_sequence_filt_collap_clust_2)
@@ -373,10 +339,6 @@ run_all <- function(args){
 
 	ambiguous <- pair_occurence_sequence_filt_collap_name[grepl("|",smallrna,fixed = T)]
 	unique <- pair_occurence_sequence_filt_collap_name[!grepl("|",smallrna,fixed = T)]
-	
-	# Writing unique to a TSV file - SS
-	write.table(unique, file = "/homes/ssamm10/HybriDetector/debug/unique.tsv", sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
-	write.table(ambiguous, file = "/homes/ssamm10/HybriDetector/debug/ambiguous.tsv", sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 	ambiguous_clust <- clustering(ambiguous)
 	unique_clust <- clustering(unique)
