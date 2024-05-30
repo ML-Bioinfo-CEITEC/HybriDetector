@@ -219,11 +219,17 @@ run_all <- function(args){
 		{
 			#subset input table by precluster
 			input_tab_sub <- input_tab[preclusters == precluster_id]
-			#perform sequence similarity clustering
-			distance_noncoding <- adist(input_tab_sub$seq.m,input_tab_sub$seq.m)
-			mean_len_mat_noncoding <- as.matrix(proxy::dist(nchar(input_tab_sub$seq.m),method = function(x,y) (x+y)/2))
-			diag(mean_len_mat_noncoding) <- nchar(input_tab_sub$seq.m)
-			input_tab_sub[,noncoding_clust := cutree(hclust(as.dist(distance_noncoding/mean_len_mat_noncoding)),h = 0.3)]
+			#check if there is only one sequence in the precluster
+			if (nrow(input_tab_sub) == 1) {
+				#add column noncoding_clust to the input table with the value 1
+				input_tab_sub[,noncoding_clust := 1]
+			} else {
+				#perform sequence similarity clustering
+				distance_noncoding <- adist(input_tab_sub$seq.m,input_tab_sub$seq.m)
+				mean_len_mat_noncoding <- as.matrix(proxy::dist(nchar(input_tab_sub$seq.m),method = function(x,y) (x+y)/2))
+				diag(mean_len_mat_noncoding) <- nchar(input_tab_sub$seq.m)
+				input_tab_sub[,noncoding_clust := cutree(hclust(as.dist(distance_noncoding/mean_len_mat_noncoding)),h = 0.3)]
+			}
 			#collapse by identified clusters
 			if (is_umi == TRUE){
 		  		pair_occurence_sequence_filt_collap_clust <- input_tab_sub[,.(smallrna = paste0(unique(smallrna),collapse = "|"),
