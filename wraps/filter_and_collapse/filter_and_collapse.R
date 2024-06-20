@@ -210,12 +210,17 @@ run_all <- function(args){
 		##calculate kmers for seq.m
 		kmers <-  t(sapply(input_tab$seq.m, function(x){x1 <-  DNAString(x)
                    oligonucleotideFrequency(x1,4)}))
+		##check if number of samples is less than 100 and add a column to the input table called preclusters with value 1 per row, otherwise proceed with preclustering withh 100 centers
+		if (nrow(input_tab) < 350) {
+			input_tab[,preclusters := 1]
+		} else {
 		##perform kmeans clustering on kmer counts
 		set.seed(123)
-		preclusters <- kmeans(kmers,centers = 100,nstart = 25)$cluster
+		preclusters <- kmeans(kmers,centers = 350,nstart = 25)$cluster
 		##join precluster labels to input table
 		input_tab <- cbind(input_tab,preclusters)
-		for (precluster_id in sort(unique(preclusters)))
+		}
+		for (precluster_id in sort(unique(input_tab$preclusters)))
 		{
 			#subset input table by precluster
 			input_tab_sub <- input_tab[preclusters == precluster_id]

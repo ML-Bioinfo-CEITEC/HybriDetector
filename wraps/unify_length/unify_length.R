@@ -59,6 +59,10 @@ run_all <- function(args){
     input_hybrids_new_pos <- input_hybrids_new_pos[order(-Ndups)]
     
   }
+
+  # convert data type of input_hybrids_new_pos$chr.g to character
+  input_hybrids_new_pos$chr.g <- as.character(input_hybrids_new_pos$chr.g)
+
   #####################################
   #check repeat_masker
   #add end position for repeatmasker overlap
@@ -68,7 +72,7 @@ run_all <- function(args){
   setkeyv(input_hybrids_new_pos, c("chr.g","start.g","end.g"))
   
   overlapped_repeatmasker <- foverlaps(input_hybrids_new_pos, repeatmasker, by.x=c("chr.g","start.g","end.g"), by.y=c("seqnames","start","end"))
-  
+
   #check the overlap length of annotated repeatmasker
   overlapped_repeatmasker[,overlap:=apply(overlapped_repeatmasker[,.(start, end, start.g, end.g)],1,function(x) min(x[2],x[4])-max(x[1],x[3])+1)]
   
